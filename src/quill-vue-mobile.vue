@@ -101,9 +101,8 @@ export default {
   }
 }
 </script>
-
 <style lang="less">
-@import "//at.alicdn.com/t/font_1652649_9s3rpkcmup.css";
+  @import "//at.alicdn.com/t/font_1652649_9s3rpkcmup.css";
 .ql-active {
   .iconfont {
     color: #3fbdf0;

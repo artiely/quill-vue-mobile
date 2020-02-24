@@ -1,8 +1,8 @@
 {
   "name": "quill-vue-mobile",
-  "version": "0.1.0",
+  "version": "0.1.6",
   "private": false,
-  "main":"./lib/editor.umd.min.js",
+  "main":"./lib/quill-vue-mobile.umd.min.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
