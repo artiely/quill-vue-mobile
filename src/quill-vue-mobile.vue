@@ -1,6 +1,6 @@
 <template>
   <div class="editor-wrapper">
-    <div id="toolbar">
+    <div id="toolbar" :style="{'bottom': kh + 'px'}">
       <button class="ql-font" :class="fontShow?'active':''" @click="fontShow=!fontShow">
         <i class="iconfont icon-ziti"></i>
         <div class="pop" v-show="fontShow">
@@ -56,8 +56,8 @@
         <i class="iconfont icon-fanchexiao"></i>
       </button>
     </div>
-      <input class="title" type="text" placeholder="请输入标题">
-    <div id="editor"></div>
+    <input class="title" v-model="title" @input="titleChange" type="text" placeholder="请输入标题" />
+    <div id="editor" style="overflow-y:scroll;height:200px" :style="{height: (vh- 51 - kh)+ 'px'}"></div>
   </div>
 </template>
 <script>
@@ -65,8 +65,20 @@ import Quill from 'quill'
 import 'quill/dist/quill.core.css'
 export default {
   name: 'quill-vue-mobile',
+  props: {
+    vh: {
+      type: [Number, String],
+      default: 0
+    },
+    kh: {
+      type: [Number, String],
+      default: 0
+    }
+  },
   data () {
     return {
+      title: '',
+      content: '',
       quill: null,
       undoBool: false,
       redoBool: false,
@@ -75,6 +87,10 @@ export default {
     }
   },
   methods: {
+    titleChange () {
+      this.$emit('title-change', this.title)
+      console.log('TCL: titleChange -> this.title', this.title)
+    },
     renderImg (url) {
       const range = this.quill.getSelection(true)
       // this.quill.insertText(range.index, '\n', Quill.sources.USER)
@@ -98,6 +114,7 @@ export default {
       this.quill.on('editor-change', (eventName, ...args) => {
         this.undoBool = this.quill.history.stack.undo.length > 0
         this.redoBool = this.quill.history.stack.redo.length > 0
+        this.$emit('content-change', this.quill.container.firstChild.innerHTML)
       })
     },
     undo () {
@@ -139,7 +156,14 @@ export default {
           this.fontShow = true
           this.layoutShow = false
           return false
-        } else if (cln === 'iconfont icon-youxuliebiao' || cln === 'iconfont icon-wuxuliebiao' || cln === 'iconfont icon-zuoduiqi' || cln === 'iconfont icon-youduiqi' || cln === 'iconfont icon-juzhongduiqi' || cln === 'iconfont icon-buju') {
+        } else if (
+          cln === 'iconfont icon-youxuliebiao' ||
+          cln === 'iconfont icon-wuxuliebiao' ||
+          cln === 'iconfont icon-zuoduiqi' ||
+          cln === 'iconfont icon-youduiqi' ||
+          cln === 'iconfont icon-juzhongduiqi' ||
+          cln === 'iconfont icon-buju'
+        ) {
           this.layoutShow = true
           this.fontShow = false
           return false
@@ -163,27 +187,29 @@ html,
 body {
   margin: 0;
   padding: 0;
-  overflow: hidden;
-  height: 100%;
+  // overflow: hidden;
+  // height: 100%;
 }
 .editor-wrapper {
-  height: 100%;
+  // height: 100%;
 }
-.title{
+.title {
   height: 50px;
   font-size: 16px;
   color: #333;
   border: none;
   width: 100%;
   border-bottom: 1px solid #eee;
-  margin-top:90px;
+  // margin-top:90px;
   text-indent: 10px;
   outline: none;
+  padding: 0;
 }
 #toolbar {
   display: flex;
   position: fixed;
-  top: 0;
+  top: auto;
+  bottom: 0;
   left: 0;
   right: 0;
   background: #f9f9f9;
@@ -194,19 +220,16 @@ body {
 }
 #editor {
   border: 1px solid #f9f9f9;
-  height: 100%;
+  // height: 100%;
   .ql-editor {
-    max-height: 100vh;
-    // padding-top: 80px;
     outline: none;
-    height: 100%;
     overflow-y: scroll;
   }
   .ql-clipboard {
     outline: none;
     height: 0;
   }
-  img{
+  img {
     max-width: 90%;
   }
 }
@@ -231,7 +254,7 @@ button {
   }
   .pop {
     position: absolute;
-    top: 40px;
+    top: -40px;
     background: #f9f9f9;
     display: flex;
     flex-wrap: nowrap;
