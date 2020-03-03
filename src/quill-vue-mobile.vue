@@ -57,7 +57,7 @@
       </button>
     </div>
     <input class="title" v-model="title" @input="titleChange" type="text" placeholder="请输入标题" />
-    <div id="editor" style="overflow-y:scroll;height:200px" :style="{height: (vh- 51 - kh)+ 'px'}"></div>
+    <div id="editor" style="overflow-y:scroll" :style="{height: (vh- 51 - kh)+ 'px'}"></div>
   </div>
 </template>
 <script>
