@@ -1,6 +1,6 @@
 {
   "name": "quill-vue-mobile",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "private": false,
   "main":"./lib/quill-vue-mobile.umd.min.js",
   "scripts": {
