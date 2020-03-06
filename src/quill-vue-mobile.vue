@@ -95,7 +95,9 @@ export default {
       const range = this.quill.getSelection(true)
       // this.quill.insertText(range.index, '\n', Quill.sources.USER)
       this.quill.insertEmbed(range.index, 'image', url, Quill.sources.USER)
-      this.quill.setSelection(range.index + 2, Quill.sources.SILENT)
+      this.$nextTick(() => {
+        this.quill.setSelection(range.index + 1, Quill.sources.SILENT)
+      })
     },
     fn3 () {
       const BlockEmbed = Quill.import('blots/block/embed')
