@@ -1,6 +1,6 @@
 <template>
   <div class="editor-wrapper">
-    <div id="toolbar" :style="{'bottom': kh + 'px'}">
+    <div id="toolbar" >
       <button class="ql-font" :class="fontShow?'active':''" @click="fontShow=!fontShow">
         <i class="iconfont icon-ziti"></i>
         <div class="pop" v-show="fontShow">
@@ -57,7 +57,7 @@
       </button>
     </div>
     <input class="title" v-model="title" @input="titleChange" type="text" placeholder="请输入标题" />
-    <div id="editor" style="overflow-y:scroll" :style="{height: (vh- 51 - kh)+ 'px'}"></div>
+    <div id="editor" style="overflow-y:scroll" :style="{height: (vh- 51 - 40 - kh)+ 'px'}"></div>
   </div>
 </template>
 <script>
@@ -68,7 +68,7 @@ export default {
   props: {
     vh: {
       type: [Number, String],
-      default: 0
+      default: window.innerHeight
     },
     kh: {
       type: [Number, String],
@@ -193,6 +193,9 @@ body {
 .editor-wrapper {
   // height: 100%;
 }
+html,body,#app,.editor-wrapper{
+  // height: 100vh;
+}
 .title {
   height: 50px;
   font-size: 16px;
@@ -200,16 +203,16 @@ body {
   border: none;
   width: 100%;
   border-bottom: 1px solid #eee;
-  // margin-top:90px;
+  margin-top:50px;
   text-indent: 10px;
   outline: none;
   padding: 0;
 }
 #toolbar {
   display: flex;
-  position: fixed;
-  top: auto;
-  bottom: 0;
+  position: absolute;
+  top: 0;
+  bottom: auto;
   left: 0;
   right: 0;
   background: #f9f9f9;
@@ -219,8 +222,10 @@ body {
   }
 }
 #editor {
+  box-sizing: border-box;
   border: 1px solid #f9f9f9;
   // height: 100%;
+  padding-bottom: 40px;
   .ql-editor {
     outline: none;
     overflow-y: scroll;
@@ -254,7 +259,7 @@ button {
   }
   .pop {
     position: absolute;
-    top: -40px;
+    top: 40px;
     background: #f9f9f9;
     display: flex;
     flex-wrap: nowrap;
