@@ -261,7 +261,7 @@ button {
   }
   .pop {
     position: absolute;
-    top: -40px;
+    top: 40px;
     background: #f9f9f9;
     display: flex;
     flex-wrap: nowrap;
