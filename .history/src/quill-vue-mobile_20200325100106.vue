@@ -56,7 +56,7 @@
         <i class="iconfont icon-fanchexiao"></i>
       </button>
     </div>
-    <input class="title" maxlength="20" v-model="title" @input="titleChange" type="text" placeholder="请输入标题" />
+    <input class="title" v-model="title" @input="titleChange" type="text" placeholder="请输入标题" />
     <div id="editor" style="overflow-y:scroll"></div>
   </div>
 </template>
@@ -68,23 +68,23 @@ export default {
   props: {
     vh: {
       type: [Number, String],
-      default: window.innerHeight
+      default: window.innerHeight,
     },
     kh: {
       type: [Number, String],
-      default: 0
+      default: 0,
     },
     defaultValue: {
       type: Object,
       default: () => {
         return {
           title: '',
-          content: ''
+          content: '',
         }
-      }
-    }
+      },
+    },
   },
-  data () {
+  data() {
     return {
       title: this.defaultValue.title,
       content: this.defaultValue.content,
@@ -92,15 +92,15 @@ export default {
       undoBool: false,
       redoBool: false,
       fontShow: false,
-      layoutShow: false
+      layoutShow: false,
     }
   },
   methods: {
-    titleChange () {
+    titleChange() {
       this.$emit('title-change', this.title)
       console.log('TCL: titleChange -> this.title', this.title)
     },
-    renderImg (url) {
+    renderImg(url) {
       const range = this.quill.getSelection(true)
       // this.quill.insertText(range.index, '\n', Quill.sources.USER)
       this.quill.insertEmbed(range.index, 'image', url, Quill.sources.USER)
@@ -108,7 +108,7 @@ export default {
         this.quill.setSelection(range.index + 1, Quill.sources.SILENT)
       })
     },
-    fn3 () {
+    fn3() {
       const BlockEmbed = Quill.import('blots/block/embed')
 
       class DividerBlot extends BlockEmbed {}
@@ -119,24 +119,22 @@ export default {
         // debug: 'info',
         placeholder: '请输入正文',
         modules: {
-          toolbar: '#toolbar'
-        }
+          toolbar: '#toolbar',
+        },
       })
-      // this.quill.setText(this.content)
-      this.quill.root.innerHTML = this.content
       this.quill.on('editor-change', (eventName, ...args) => {
         this.undoBool = this.quill.history.stack.undo.length > 0
         this.redoBool = this.quill.history.stack.redo.length > 0
         this.$emit('content-change', this.quill.container.firstChild.innerHTML)
       })
     },
-    undo () {
+    undo() {
       this.quill.history.undo()
     },
-    redo () {
+    redo() {
       this.quill.history.redo()
     },
-    hr () {
+    hr() {
       const range = this.quill.getSelection(true)
       this.quill.insertText(range.index, '\n', Quill.sources.USER)
       this.quill.insertEmbed(
@@ -147,11 +145,11 @@ export default {
       )
       this.quill.setSelection(range.index + 2, Quill.sources.SILENT)
     },
-    uploadImg () {
+    uploadImg() {
       this.$emit('upload-img')
-    }
+    },
   },
-  mounted () {
+  mounted() {
     this.fn3()
     document.addEventListener(
       'click',
@@ -186,7 +184,7 @@ export default {
       },
       false
     )
-  }
+  },
 }
 </script>
 <style lang="less">

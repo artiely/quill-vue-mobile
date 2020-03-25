@@ -1,6 +1,6 @@
 <template>
   <div class="editor-wrapper">
-    <div id="toolbar">
+    <div id="toolbar" >
       <button class="ql-font" :class="fontShow?'active':''" @click="fontShow=!fontShow">
         <i class="iconfont icon-ziti"></i>
         <div class="pop" v-show="fontShow">
@@ -56,8 +56,8 @@
         <i class="iconfont icon-fanchexiao"></i>
       </button>
     </div>
-    <input class="title" maxlength="20" v-model="title" @input="titleChange" type="text" placeholder="请输入标题" />
-    <div id="editor" style="overflow-y:scroll"></div>
+    <input class="title" v-model="title" @input="titleChange" type="text" placeholder="请输入标题" />
+    <div id="editor" style="overflow-y:scroll" ></div>
   </div>
 </template>
 <script>
@@ -74,20 +74,21 @@ export default {
       type: [Number, String],
       default: 0
     },
-    defaultValue: {
-      type: Object,
-      default: () => {
+    defaultValue:{
+      type:Object,
+      default:()=>{
         return {
-          title: '',
-          content: ''
+          title:"",
+          content:""
         }
       }
     }
+
   },
   data () {
     return {
-      title: this.defaultValue.title,
-      content: this.defaultValue.content,
+      title: '',
+      content: '',
       quill: null,
       undoBool: false,
       redoBool: false,
@@ -122,8 +123,6 @@ export default {
           toolbar: '#toolbar'
         }
       })
-      // this.quill.setText(this.content)
-      this.quill.root.innerHTML = this.content
       this.quill.on('editor-change', (eventName, ...args) => {
         this.undoBool = this.quill.history.stack.undo.length > 0
         this.redoBool = this.quill.history.stack.redo.length > 0
@@ -190,7 +189,7 @@ export default {
 }
 </script>
 <style lang="less">
-@import '//at.alicdn.com/t/font_1652649_qu42x05j4s.css';
+@import "//at.alicdn.com/t/font_1652649_qu42x05j4s.css";
 .ql-active {
   .iconfont {
     color: #3fbdf0;
@@ -206,10 +205,7 @@ body {
 .editor-wrapper {
   // height: 100%;
 }
-html,
-body,
-#app,
-.editor-wrapper {
+html,body,#app,.editor-wrapper{
   // height: 100vh;
 }
 .title {

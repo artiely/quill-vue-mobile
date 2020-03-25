@@ -56,7 +56,7 @@
         <i class="iconfont icon-fanchexiao"></i>
       </button>
     </div>
-    <input class="title" maxlength="20" v-model="title" @input="titleChange" type="text" placeholder="请输入标题" />
+    <input class="title" v-model="title" @input="titleChange" type="text" placeholder="请输入标题" />
     <div id="editor" style="overflow-y:scroll"></div>
   </div>
 </template>

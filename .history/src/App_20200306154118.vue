@@ -1,5 +1,5 @@
 <template>
-    <quill-vue-mobile :defaultValue="{title:123,content:456}" ref="editor" @upload-img="uploadImg"   @title-change="titleChange" @content-change="contentChange"/>
+    <quill-vue-mobile ref="editor" @upload-img="uploadImg"   @title-change="titleChange" @content-change="contentChange"/>
 </template>
 
 <script>
