@@ -1,9 +1,16 @@
 <template>
   <div class="editor-wrapper">
     <div id="toolbar">
-      <button class="ql-font" :class="fontShow?'active':''" @click="fontShow=!fontShow">
+      <button
+        class="ql-font"
+        :class="fontShow?'active':''"
+        @click="fontShow=!fontShow"
+      >
         <i class="iconfont icon-ziti"></i>
-        <div class="pop" v-show="fontShow">
+        <div
+          class="pop"
+          v-show="fontShow"
+        >
           <button class="ql-bold">
             <i class="iconfont icon-cuti"></i>
           </button>
@@ -21,22 +28,44 @@
           </button>
         </div>
       </button>
-      <button class="ql-layout" :class="layoutShow?'active':''" @click="layoutShow=!layoutShow">
+      <button
+        class="ql-layout"
+        :class="layoutShow?'active':''"
+        @click="layoutShow=!layoutShow"
+      >
         <i class="iconfont icon-buju"></i>
-        <div class="pop" v-show="layoutShow">
-          <button class="ql-list" value="ordered">
+        <div
+          class="pop"
+          v-show="layoutShow"
+        >
+          <button
+            class="ql-list"
+            value="ordered"
+          >
             <i class="iconfont icon-youxuliebiao"></i>
           </button>
-          <button class="ql-list" value="bullet">
+          <button
+            class="ql-list"
+            value="bullet"
+          >
             <i class="iconfont icon-wuxuliebiao"></i>
           </button>
-          <button class="ql-align" value="justify">
+          <button
+            class="ql-align"
+            value="justify"
+          >
             <i class="iconfont icon-zuoduiqi"></i>
           </button>
-          <button class="ql-align" value="right">
+          <button
+            class="ql-align"
+            value="right"
+          >
             <i class="iconfont icon-youduiqi"></i>
           </button>
-          <button class="ql-align" value="center">
+          <button
+            class="ql-align"
+            value="center"
+          >
             <i class="iconfont icon-juzhongduiqi"></i>
           </button>
         </div>
@@ -49,15 +78,31 @@
         <i class="iconfont icon-jianxianxing"></i>
       </button>
 
-      <button @click="undo" :disabled="!undoBool">
+      <button
+        @click="undo"
+        :disabled="!undoBool"
+      >
         <i class="iconfont icon-7chexiao"></i>
       </button>
-      <button @click="redo" :disabled="!redoBool">
+      <button
+        @click="redo"
+        :disabled="!redoBool"
+      >
         <i class="iconfont icon-fanchexiao"></i>
       </button>
     </div>
-    <input class="title" maxlength="20" v-model="title" @input="titleChange" type="text" placeholder="请输入标题" />
-    <div id="editor" style="overflow-y:scroll"></div>
+    <input
+      class="title"
+      maxlength="20"
+      v-model="title"
+      @input="titleChange"
+      type="text"
+      placeholder="请输入标题"
+    />
+    <div
+      id="editor"
+      style="overflow-y:scroll"
+    ></div>
   </div>
 </template>
 <script>
@@ -95,6 +140,15 @@ export default {
       layoutShow: false
     }
   },
+  watch: {
+    defaultValue: {
+      handler (val) {
+        this.title = val.title || ''
+        this.content = val.content || ''
+      },
+      deep: true
+    }
+  },
   methods: {
     titleChange () {
       this.$emit('title-change', this.title)
@@ -111,7 +165,7 @@ export default {
     fn3 () {
       const BlockEmbed = Quill.import('blots/block/embed')
 
-      class DividerBlot extends BlockEmbed {}
+      class DividerBlot extends BlockEmbed { }
       DividerBlot.blotName = 'divider'
       DividerBlot.tagName = 'hr'
       Quill.register(DividerBlot)
