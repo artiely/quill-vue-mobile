@@ -145,6 +145,7 @@ export default {
       handler (val) {
         this.title = val.title || ''
         this.content = val.content || ''
+        this.quill.root.innerHTML = this.content
       },
       deep: true
     }
