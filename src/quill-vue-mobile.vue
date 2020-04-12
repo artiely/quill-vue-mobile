@@ -146,6 +146,8 @@ export default {
         this.title = val.title || ''
         this.content = val.content || ''
         this.quill.root.innerHTML = this.content
+        this.$emit('content-change', this.content)
+        this.titleChange()
       },
       deep: true
     }
