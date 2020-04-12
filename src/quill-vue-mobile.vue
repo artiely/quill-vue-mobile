@@ -108,6 +108,7 @@
 <script>
 import Quill from 'quill'
 import 'quill/dist/quill.core.css'
+
 export default {
   name: 'quill-vue-mobile',
   props: {
@@ -146,8 +147,8 @@ export default {
         this.title = val.title || ''
         this.content = val.content || ''
         this.quill.root.innerHTML = this.content
-        this.$emit('content-change', this.content)
         this.titleChange()
+        this.$emit('content-change', this.content)
       },
       deep: true
     }
@@ -155,7 +156,7 @@ export default {
   methods: {
     titleChange () {
       this.$emit('title-change', this.title)
-      console.log('TCL: titleChange -> this.title', this.title)
+      this.$emit('input', this.title)
     },
     renderImg (url) {
       const range = this.quill.getSelection(true)
@@ -185,6 +186,7 @@ export default {
         this.undoBool = this.quill.history.stack.undo.length > 0
         this.redoBool = this.quill.history.stack.redo.length > 0
         this.$emit('content-change', this.quill.container.firstChild.innerHTML)
+        this.titleChange()
       })
     },
     undo () {
