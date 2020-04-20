@@ -183,6 +183,7 @@ export default {
           toolbar: '#toolbar'
         }
       })
+      this.$emit('init', this.quill)
       // this.quill.setText(this.content)
       this.quill.root.innerHTML = this.content
       this.quill.on('editor-change', (eventName, ...args) => {
