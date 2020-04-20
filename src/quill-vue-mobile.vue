@@ -177,14 +177,12 @@ export default {
       DividerBlot.tagName = 'hr'
       Quill.register(DividerBlot)
       this.quill = new Quill('#editor', {
-        // debug: 'info',
         placeholder: '请输入正文',
         modules: {
           toolbar: '#toolbar'
         }
       })
       this.$emit('init', this.quill)
-      // this.quill.setText(this.content)
       this.quill.root.innerHTML = this.content
       this.quill.on('editor-change', (eventName, ...args) => {
         this.undoBool = this.quill.history.stack.undo.length > 0
@@ -220,7 +218,6 @@ export default {
       'click',
       e => {
         const cln = e.toElement.className
-        console.log('TCL: mounted -> cln', cln)
         if (
           cln === 'iconfont icon-ziti' ||
           cln === 'iconfont icon-cuti' ||
