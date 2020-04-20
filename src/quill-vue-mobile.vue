@@ -30,7 +30,7 @@
         </div>
       </button>
       <button
-        class="ql-layout"
+        class="ql-font"
         :class="layoutShow?'active':''"
         @click="layoutShow=!layoutShow"
       >
