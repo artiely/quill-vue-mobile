@@ -1,6 +1,7 @@
 <template>
   <div class="editor-wrapper">
     <div id="toolbar">
+      <div style="flex:1"></div>
       <button
         class="ql-font"
         :class="fontShow?'active':''"
@@ -160,10 +161,12 @@ export default {
     },
     renderImg (url) {
       const range = this.quill.getSelection(true)
-      // this.quill.insertText(range.index, '\n', Quill.sources.USER)
       this.quill.insertEmbed(range.index, 'image', url, Quill.sources.USER)
       this.$nextTick(() => {
-        this.quill.setSelection(range.index + 1, Quill.sources.SILENT)
+        this.quill.insertText(range.index + 1, '\n', Quill.sources.USER)
+        this.$nextTick(() => {
+          this.quill.setSelection(range.index + 2, Quill.sources.SILENT)
+        })
       })
     },
     fn3 () {
@@ -292,9 +295,6 @@ body,
   right: 0;
   background: #f9f9f9;
   z-index: 99;
-  button {
-    flex: 1;
-  }
 }
 #editor {
   box-sizing: border-box;
@@ -322,6 +322,7 @@ button {
   font-size: 18px;
   padding: 0;
   height: 40px;
+  width: 45px;
   text-align: center;
   .iconfont {
     color: #444;
