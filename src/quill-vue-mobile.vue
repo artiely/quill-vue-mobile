@@ -113,14 +113,14 @@ import 'quill/dist/quill.core.css'
 export default {
   name: 'quill-vue-mobile',
   props: {
-    vh: {
-      type: [Number, String],
-      default: window.innerHeight
-    },
-    kh: {
-      type: [Number, String],
-      default: 0
-    },
+    // vh: {
+    //   type: [Number, String],
+    //   default: window.innerHeight
+    // },
+    // kh: {
+    //   type: [Number, String],
+    //   default: 0
+    // },
     defaultValue: {
       type: Object,
       default: () => {
