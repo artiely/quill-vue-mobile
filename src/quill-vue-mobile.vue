@@ -262,11 +262,20 @@ html,
 body {
   margin: 0;
   padding: 0;
+  height: 100%;
+  overflow: hidden;
   // overflow: hidden;
   // height: 100%;
 }
+.ql-container{
+  overflow-y:hidden!important ;
+  height: calc(100% - 90px);
+}
 .editor-wrapper {
-  // height: 100%;
+  height: 100%;
+}
+.ql-editor{
+  padding-bottom: 40px;
 }
 html,
 body,
@@ -276,7 +285,6 @@ body,
 }
 .title {
   height: 50px;
-  font-size: 16px;
   color: #333;
   border: none;
   width: 100%;
@@ -300,7 +308,7 @@ body,
   box-sizing: border-box;
   border: 1px solid #f9f9f9;
   // height: 100%;
-  padding-bottom: 40px;
+  // padding-bottom: 40px;
   .ql-editor {
     outline: none;
     overflow-y: scroll;
