@@ -92,23 +92,81 @@
         <i class="iconfont icon-fanchexiao"></i>
       </button>
     </div>
-    <input
+  <div style="position:relative">
+    <textarea
       class="title"
-      maxlength="20"
-      v-model="title"
+      id="textarea"
+      maxlength="40"
+      v-model.trim="title"
       @input="titleChange"
       type="text"
       placeholder="请输入标题"
-    />
+    ></textarea>
+    <span style="position:absolute;right:0;bottom:0;font-size:14px;color:#555" v-if="warning"><span :class="warning?'warning':''">超出限制 {{textLength-40}} 字符</span></span>
+  </div>
+
     <div
       id="editor"
       style="overflow-y:scroll"
-    ></div>
+    >
+
+    </div>
   </div>
 </template>
 <script>
 import Quill from 'quill'
 import 'quill/dist/quill.core.css'
+function strlen (str) {
+  var len = 0
+  for (var i = 0; i < str.length; i++) {
+    var c = str.charCodeAt(i)
+    // 单字节加1
+    if ((c >= 0x0001 && c <= 0x007e) || (c <= 0xff9f && c >= 0xff60)) {
+      len++
+    } else {
+      len += 2
+      // len++
+    }
+  }
+  return len
+}
+function makeExpandingArea (el) {
+  var timer = null
+  // 由于ie8有溢出堆栈问题，故调整了这里
+  var setStyle = function (el, auto) {
+    if (auto) el.style.height = 'auto'
+    el.style.height = el.scrollHeight + 'px'
+  }
+  var delayedResize = function (el) {
+    if (timer) {
+      clearTimeout(timer)
+      timer = null
+    }
+    timer = setTimeout(function () {
+      setStyle(el)
+    }, 200)
+  }
+  if (el.addEventListener) {
+    el.addEventListener('input', function () {
+      setStyle(el)
+    }, false)
+    setStyle(el)
+  } else if (el.attachEvent) {
+    el.attachEvent('onpropertychange', function () {
+      setStyle(el)
+    })
+    setStyle(el)
+  }
+  if (window.VBArray && window.addEventListener) { // IE9
+    el.attachEvent('onkeydown', function () {
+      var key = window.event.keyCode
+      if (key === 8 || key === 46) delayedResize(el)
+    })
+    el.attachEvent('oncut', function () {
+      delayedResize(el)
+    }) // 处理粘贴
+  }
+}
 
 export default {
   name: 'quill-vue-mobile',
@@ -139,7 +197,9 @@ export default {
       undoBool: false,
       redoBool: false,
       fontShow: false,
-      layoutShow: false
+      layoutShow: false,
+      textLength: 0,
+      warning: false
     }
   },
   watch: {
@@ -152,6 +212,16 @@ export default {
         this.$emit('content-change', this.content)
       },
       deep: true
+    },
+    title: {
+      handler (val) {
+        this.textLength = strlen(val)
+        if (this.textLength > 40) {
+          this.warning = true
+        } else {
+          this.warning = false
+        }
+      }
     }
   },
   methods: {
@@ -213,6 +283,8 @@ export default {
     }
   },
   mounted () {
+    var textarea = document.getElementById('textarea')
+    makeExpandingArea(textarea)
     this.fn3()
     document.addEventListener(
       'click',
@@ -256,6 +328,17 @@ export default {
     color: #3fbdf0;
   }
 }
+.warning{
+  color: red;
+}
+.expandingArea.active pre {
+  display: block;
+  visibility: hidden;
+}
+.expandingArea.active pre span {
+  display: block;
+  visibility: hidden;
+}
 html,
 body {
   margin: 0;
@@ -265,14 +348,14 @@ body {
   // overflow: hidden;
   // height: 100%;
 }
-.ql-container{
-  overflow-y:hidden!important ;
+.ql-container {
+  overflow-y: hidden !important ;
   height: calc(100% - 90px);
 }
 .editor-wrapper {
   height: 100%;
 }
-.ql-editor{
+.ql-editor {
   padding-bottom: 40px;
 }
 html,
@@ -282,15 +365,20 @@ body,
   // height: 100vh;
 }
 .title {
-  height: 50px;
   color: #333;
   border: none;
   width: 100%;
   border-bottom: 1px solid #eee;
-  // margin-top:50px;
   text-indent: 10px;
   outline: none;
   padding: 0;
+  font-size: 36px;
+  overflow: hidden;
+  min-height: 40px;
+  max-height: 80px;
+  font-weight: 600;
+  height: 100%;
+  resize: none;
 }
 #toolbar {
   display: flex;
