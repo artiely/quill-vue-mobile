@@ -1,5 +1,25 @@
 <template>
   <div class="editor-wrapper">
+
+  <div style="position:relative;display: flex;padding:0 10px">
+    <textarea
+      class="title"
+      id="textarea"
+      maxlength="40"
+      v-model.trim="title"
+      @input="titleChange"
+      type="text"
+      placeholder="请输入标题"
+    ></textarea>
+    <span style="position:absolute;right:0;bottom:0;font-size:14px;color:#555" v-if="warning"><span :class="warning?'warning':''">超出限制 {{textLength-40}} 字符</span></span>
+  </div>
+
+    <div
+      id="editor"
+      style="overflow-y:scroll"
+    >
+
+    </div>
     <div id="toolbar">
       <div style="flex:1"></div>
       <button
@@ -91,25 +111,6 @@
       >
         <i class="iconfont icon-fanchexiao"></i>
       </button>
-    </div>
-  <div style="position:relative">
-    <textarea
-      class="title"
-      id="textarea"
-      maxlength="40"
-      v-model.trim="title"
-      @input="titleChange"
-      type="text"
-      placeholder="请输入标题"
-    ></textarea>
-    <span style="position:absolute;right:0;bottom:0;font-size:14px;color:#555" v-if="warning"><span :class="warning?'warning':''">超出限制 {{textLength-40}} 字符</span></span>
-  </div>
-
-    <div
-      id="editor"
-      style="overflow-y:scroll"
-    >
-
     </div>
   </div>
 </template>
@@ -351,9 +352,12 @@ body {
 .ql-container {
   overflow-y: hidden !important ;
   height: calc(100% - 90px);
+  font-size: 24px;
 }
 .editor-wrapper {
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .ql-editor {
   padding-bottom: 40px;
@@ -369,7 +373,6 @@ body,
   border: none;
   width: 100%;
   border-bottom: 1px solid #eee;
-  text-indent: 10px;
   outline: none;
   padding: 0;
   font-size: 36px;
@@ -379,20 +382,17 @@ body,
   font-weight: 600;
   height: 100%;
   resize: none;
+  line-height: 40px;
 }
 #toolbar {
   display: flex;
-  position: absolute;
-  top: auto;
-  bottom: 0;
-  left: 0;
-  right: 0;
   background: #f9f9f9;
   z-index: 99;
 }
 #editor {
   box-sizing: border-box;
   border: 1px solid #f9f9f9;
+  flex: 1;
   // height: 100%;
   // padding-bottom: 40px;
   .ql-editor {
