@@ -1,7 +1,7 @@
 <template>
   <div class="editor-wrapper">
-
-  <div style="position:relative;display: flex;padding:0 10px">
+    <div class="flex1">
+  <div style="position:relative;padding:0 10px">
     <textarea
       class="title"
       id="textarea"
@@ -16,9 +16,8 @@
 
     <div
       id="editor"
-      style="overflow-y:scroll"
     >
-
+    </div>
     </div>
     <div id="toolbar">
       <div style="flex:1"></div>
@@ -131,7 +130,7 @@ function strlen (str) {
   }
   return len
 }
-function makeExpandingArea (el) {
+/* function makeExpandingArea (el) {
   var timer = null
   // 由于ie8有溢出堆栈问题，故调整了这里
   var setStyle = function (el, auto) {
@@ -167,7 +166,7 @@ function makeExpandingArea (el) {
       delayedResize(el)
     }) // 处理粘贴
   }
-}
+} */
 
 export default {
   name: 'quill-vue-mobile',
@@ -284,8 +283,8 @@ export default {
     }
   },
   mounted () {
-    var textarea = document.getElementById('textarea')
-    makeExpandingArea(textarea)
+    // var textarea = document.getElementById('textarea')
+    // makeExpandingArea(textarea)
     this.fn3()
     document.addEventListener(
       'click',
@@ -329,6 +328,15 @@ export default {
     color: #3fbdf0;
   }
 }
+.ql-editor.ql-blank::before{
+  font-style: normal;
+}
+.flex1{
+  flex: 1;
+  overflow-y: scroll;
+  margin-bottom: 40px;
+  height: 100%;
+}
 .warning{
   color: red;
 }
@@ -351,8 +359,9 @@ body {
 }
 .ql-container {
   overflow-y: hidden !important ;
-  height: calc(100% - 90px);
+  // height: calc(100% - 90px);
   font-size: 24px;
+  height: auto!important;
 }
 .editor-wrapper {
   height: 100%;
@@ -379,25 +388,30 @@ body,
   overflow: hidden;
   min-height: 40px;
   max-height: 80px;
-  font-weight: 600;
+  height: 80px;
+  font-weight: 500;
   height: 100%;
   resize: none;
   line-height: 40px;
 }
 #toolbar {
   display: flex;
+  position: fixed;
+  bottom:0;
+  width: 100%;
   background: #f9f9f9;
   z-index: 99;
+  height: 40px;
 }
 #editor {
   box-sizing: border-box;
-  border: 1px solid #f9f9f9;
-  flex: 1;
+  border: none;
+  // flex: 1;
   // height: 100%;
   // padding-bottom: 40px;
   .ql-editor {
     outline: none;
-    overflow-y: scroll;
+    // overflow-y: scroll;
   }
   .ql-clipboard {
     outline: none;
